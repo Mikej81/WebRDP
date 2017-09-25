@@ -1,0 +1,24 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+
+root = true
+
+[*]
+indent_style = spaces
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# The suggested syntax for YAML files is to use 2 spaces for indentation
+[*.yml]
+indent_style = spaces
+indent_size = 2
+
+# Command:
+# npm install --save <module>
+# reformats package.json file with 2 spaces
+[package.json]
+indent_style = spaces
+indent_size = 2

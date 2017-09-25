@@ -1,0 +1,5 @@
+{
+	"default": true,
+	"env-var": "%{CONFIG_LOADER_TEST_VAR_DEF}",
+	"env-var-with-default": "%{CONFIG_LOADER_TEST_VAR_DEF|999}"
+}

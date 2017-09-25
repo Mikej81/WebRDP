@@ -1,0 +1,24 @@
+{
+  "name": "webrdp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Coleman <stumpj@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "basic-auth": "^2.0.0",
+    "colors": "^1.1.2",
+    "express": "^4.15.5",
+    "express-session": "^1.15.5",
+    "mstsc.js": "^0.2.4",
+    "node-rdpjs": "^0.3.0",
+    "pug": "^2.0.0-rc.4",
+    "read-config": "^2.0.0",
+    "socket.io": "^2.0.3",
+    "util": "^0.10.3",
+    "validator": "^8.2.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+	"a1": "a1",
+	"a2": "a1",
+	"env-var": "%{CONFIG_LOADER_TEST_VAR_A}"
+}

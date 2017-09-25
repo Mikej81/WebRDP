@@ -1,0 +1,14 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "requireLib": false,
+    "requireRoot": false
+  },
+  "rules": {
+    "padded-blocks": 0,
+    "no-unused-expressions": 0,
+    "max-nested-callbacks": 0
+  }
+}

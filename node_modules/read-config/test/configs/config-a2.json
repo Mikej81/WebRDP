@@ -1,0 +1,5 @@
+{
+	"__parent": "config-a1",
+	"a2": "a2",
+	"local-var": "@{a1}"
+}
