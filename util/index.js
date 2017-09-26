@@ -17,7 +17,7 @@ exports.basicAuth = function basicAuth (req, res, next) {
   } else {
     res.statusCode = 401
     debug('basicAuth credential request (401)')
-    res.setHeader('WWW-Authenticate', 'Basic realm="WebSSH"')
+    res.setHeader('WWW-Authenticate', 'Basic realm="WebRDP"')
     res.end('Username and password required for web RDP service.')
   }
 }
