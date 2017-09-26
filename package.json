@@ -17,7 +17,7 @@
     "node-rdpjs": "^0.3.0",
     "pug": "^2.0.0-rc.4",
     "read-config": "^2.0.0",
-    "socket.io": "^2.0.3",
+    "socket.io": "^1.7.4",
     "util": "^0.10.3",
     "validator": "^8.2.0"
   }

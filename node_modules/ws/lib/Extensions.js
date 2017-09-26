@@ -1,29 +1,33 @@
-'use strict';
+
+var util = require('util');
 
 /**
- * Parse the `Sec-WebSocket-Extensions` header into an object.
- *
- * @param {String} value field value of the header
- * @return {Object} The parsed object
- * @public
+ * Module exports.
  */
-const parse = (value) => {
+
+exports.parse = parse;
+exports.format = format;
+
+/**
+ * Parse extensions header value
+ */
+
+function parse(value) {
   value = value || '';
 
-  const extensions = {};
+  var extensions = {};
 
-  value.split(',').forEach((v) => {
-    const params = v.split(';');
-    const token = params.shift().trim();
-    const paramsList = extensions[token] = extensions[token] || [];
-    const parsedParams = {};
+  value.split(',').forEach(function(v) {
+    var params = v.split(';');
+    var token = params.shift().trim();
+    var paramsList = extensions[token] = extensions[token] || [];
+    var parsedParams = {};
 
-    params.forEach((param) => {
-      const parts = param.trim().split('=');
-      const key = parts[0];
+    params.forEach(function(param) {
+      var parts = param.trim().split('=');
+      var key = parts[0];
       var value = parts[1];
-
-      if (value === undefined) {
+      if (typeof value === 'undefined') {
         value = true;
       } else {
         // unquote value
@@ -41,27 +45,26 @@ const parse = (value) => {
   });
 
   return extensions;
-};
+}
 
 /**
- * Serialize a parsed `Sec-WebSocket-Extensions` header to a string.
- *
- * @param {Object} value The object to format
- * @return {String} A string representing the given value
- * @public
+ * Format extensions header value
  */
-const format = (value) => {
-  return Object.keys(value).map((token) => {
+
+function format(value) {
+  return Object.keys(value).map(function(token) {
     var paramsList = value[token];
-    if (!Array.isArray(paramsList)) paramsList = [paramsList];
-    return paramsList.map((params) => {
-      return [token].concat(Object.keys(params).map((k) => {
+    if (!util.isArray(paramsList)) {
+      paramsList = [paramsList];
+    }
+    return paramsList.map(function(params) {
+      return [token].concat(Object.keys(params).map(function(k) {
         var p = params[k];
-        if (!Array.isArray(p)) p = [p];
-        return p.map((v) => v === true ? k : `${k}=${v}`).join('; ');
+        if (!util.isArray(p)) p = [p];
+        return p.map(function(v) {
+          return v === true ? k : k + '=' + v;
+        }).join('; ');
       })).join('; ');
     }).join(', ');
   }).join(', ');
-};
-
-module.exports = { format, parse };
+}
