@@ -9,6 +9,7 @@ module.exports = function (server) {
 	var io = require('socket.io')(server);
 
 	io.on('connection', function(client) {
+			console.log(server.req);
 		var rdpClient = null;
 		client.on('infos', function (infos) {
 			if (rdpClient) {
