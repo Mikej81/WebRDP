@@ -4,7 +4,7 @@ var http = require('http');
 var myutil = require('./util')
 var config = require('read-config')(path.join(__dirname, 'config.json'))
 var validator = require('validator')
-
+var basicAuth = require('express-basic-auth');
 
 var session = require('express-session')({
   secret: config.session.secret,
@@ -13,12 +13,16 @@ var session = require('express-session')({
   saveUninitialized: false,
   unset: 'destroy'
 })
+var sharedsession = require("express-socket.io-session");
+
 
 //Set up Express to share session data with ws://, support Basic Auth and use the Pug
 //view engine.
 var app = express();
 app.use(session)
-app.use(myutil.basicAuth)
+app.use(basicAuth( { authorizer: expressAuthorizer, unauthorizedResponse: getUnauthorizedResponse, challenge: true, } ));
+
+//app.use(myutil.basicAuth)
 app.set('view engine', 'pug')
 app.use(express.static(__dirname + '/client'))
 
@@ -44,7 +48,13 @@ app.use(function (err, req, res, next) {
 
 var server = http.createServer(app).listen(process.env.PORT || 9250);
 var io = require('socket.io').listen(server);
-//var socket = require('./socket')
+
+// Use shared session middleware for socket.io
+// setting autoSave:true
+io.use(sharedsession(session, {
+    autoSave:true
+}));
+
 
 // socket.io
 // expose express session with socket.request.session
@@ -52,6 +62,17 @@ io.use(function (socket, next) {
   (socket.request.res) ? session(socket.request, socket.request.res, next)
     : next()
 })
+
+
+function expressAuthorizer(username, password) {
+  return username && password
+}
+
+function getUnauthorizedResponse(req) {
+    return req.auth ?
+        ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected') :
+        'No credentials provided'
+}
 
 require('./server.js')(server);
 
