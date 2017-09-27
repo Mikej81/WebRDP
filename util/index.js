@@ -2,7 +2,7 @@
 
 // private
 require('colors') // allow for color property extensions in log messages
-var debug = require('debug')('WebRDP')
+var debug = require('debug')('WebSSH2')
 var Auth = require('basic-auth')
 
 exports.basicAuth = function basicAuth (req, res, next) {
@@ -17,7 +17,7 @@ exports.basicAuth = function basicAuth (req, res, next) {
   } else {
     res.statusCode = 401
     debug('basicAuth credential request (401)')
-    res.setHeader('WWW-Authenticate', 'Basic realm="WebRDP"')
-    res.end('Username and password required for web RDP service.')
+    res.setHeader('WWW-Authenticate', 'Basic realm="WebSSH"')
+    res.end('Username and password required for web SSH service.')
   }
 }

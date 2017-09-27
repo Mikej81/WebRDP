@@ -143,23 +143,23 @@
 		      , base = parts.slice(0, parts.length - 1).join('/') + '/'
 		      , path = base + 'socket.io';
 
-
 			// start connection
 			var self = this;
+			//this.socket = io(window.location.protocol + "//" + window.location.host, { "path": path}).on('rdp-connect', function() {
 			this.socket = io(window.location.protocol + "//" + window.location.host).on('rdp-connect', function() {
 				// this event can be occured twice (RDP protocol stack artefact)
-				console.log('[mstsc.js] connected');
+				console.log('[WebRDP] connected');
 				self.activeSession = true;
 			}).on('rdp-bitmap', function(bitmap) {
-				console.log('[mstsc.js] bitmap update bpp : ' + bitmap.bitsPerPixel);
+				console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel);
 				self.render.update(bitmap);
 			}).on('rdp-close', function() {
 				next(null);
-				console.log('[mstsc.js] close');
+				console.log('[WebRDP] close');
 				self.activeSession = false;
 			}).on('rdp-error', function (err) {
 				next(err);
-				console.log('[mstsc.js] error : ' + err.code + '(' + err.message + ')');
+				console.log('[WebRDP] error : ' + err.code + '(' + err.message + ')');
 				self.activeSession = false;
 			});
 

@@ -1,44 +1,48 @@
-// socket/index.js
-
-// private
-var debug = require('debug')
-var debugWebRDP = require('debug')('WebRDP')
 var rdp = require('node-rdpjs');
-var termCols, termRows
 
-// public
-module.exports = function socket (socket) {
+/**
+ * Create proxy between rdp layer and socket io
+ * @param server {http(s).Server} http server
+ */
+module.exports = function (socket) {
   // if websocket connection arrives without an express session, kill it
   if (!socket.request.session) {
-    socket.emit('401 UNAUTHORIZED')
-    debugWebRDP('SOCKET: No Express Session / REJECTED')
-    socket.disconnect(true)
-    return
+    socket.emit('401 UNAUTHORIZED');
+    console.log('SOCKET: No Express Session / REJECTED');
+    socket.disconnect(true);
+    return;
   }
-  socket.on('connection', function(client) {
-    var rdpClient = null;
-    client.on('infos', function (infos) {
+
+  socket.on('ready', function(data) {
+    console.log('Client connected...[server-side]');
+    console.log(data);
+    socket.emit('rdp', socket.request.session.host, 'f5lab', socket.request.session.username, socket.request.session.userpassword);
+    //});
+  });
+      var rdpClient = null;
+    socket.on('infos', function (infos) {
       if (rdpClient) {
         // clean older connection
         rdpClient.close();
       };
+
       rdpClient = rdp.createClient({
-        domain : 'f5lab',
-        userName : 'administrator',
-        password : 'pass@word1',
+        domain : infos.domain,
+        userName : infos.username,
+        password : infos.password,
         enablePerf : true,
         autoLogin : true,
         screen : infos.screen,
         locale : infos.locale,
         logLevel : process.argv[2] || 'INFO'
       }).on('connect', function () {
-        client.emit('rdp-connect');
+        socket.emit('rdp-connect');
       }).on('bitmap', function(bitmap) {
-        client.emit('rdp-bitmap', bitmap);
+        socket.emit('rdp-bitmap', bitmap);
       }).on('close', function() {
-        client.emit('rdp-close');
+        socket.emit('rdp-close');
       }).on('error', function(err) {
-        client.emit('rdp-error', err);
+        socket.emit('rdp-error', err);
       }).connect(infos.ip, infos.port);
     }).on('mouse', function (x, y, button, isPressed) {
       if (!rdpClient)  return;
@@ -62,5 +66,5 @@ module.exports = function socket (socket) {
 
       rdpClient.close();
     });
-  });
+
 }
