@@ -10,7 +10,7 @@
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "author": "Michael Coleman <stumpj@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "node": "0.12.7"
   },
