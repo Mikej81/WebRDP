@@ -29,13 +29,13 @@
     	client = Mstsc.client.create(Mstsc.$(canvas));
     }
 
-	function connect (ip, domain, username, password) {
+	function connect () {
 		Mstsc.$("main").style.display = 'none';
 		var canvas = Mstsc.$("myCanvas");
 		canvas.style.display = 'inline';
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
-		client.connect(ip, domain, username, password, function (err) {
+		client.connect( function (err) {
 			Mstsc.$("myCanvas").style.display = 'none';
 			Mstsc.$("main").style.display = 'inline';
 		});
@@ -53,9 +53,7 @@
     var socket = io.connect();
     socket.on('connect', function(data) {
         socket.emit('ready', 'Client connected...[client-side]');
+        connect();
     });
-    socket.on('rdp', function(host, domain, username, password) {
-      connect(host, domain, username, password);
-    })
 </script>
 </html>
