@@ -8,12 +8,13 @@
   },
   "author": "Michael Coleman <stumpj@gmail.com>",
   "license": "ISC",
-    "engines": {
+  "engines": {
     "node": "0.12.7"
   },
   "dependencies": {
     "basic-auth": "^2.0.0",
     "colors": "^1.1.2",
+    "debug": "^2.6.9",
     "express": "^4.15.4",
     "express-session": "^1.15.6",
     "express-socket.io-session": "^1.3.2",

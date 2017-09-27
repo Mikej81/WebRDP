@@ -16,7 +16,7 @@ module.exports = function (socket) {
   socket.on('ready', function(data) {
     console.log('Client connected...[server-side]');
     console.log(data);
-    socket.emit('rdp', socket.request.session.host, 'f5lab', socket.request.session.username, socket.request.session.userpassword);
+    socket.emit('rdp', socket.request.session.host, socket.request.session.rdpdomain, socket.request.session.username, socket.request.session.userpassword);
     //});
   });
       var rdpClient = null;
