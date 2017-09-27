@@ -1,0 +1,136 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/mcoleman/.nvm/versions/node/v0.12.18/bin/node',
+1 verbose cli   '/Users/mcoleman/.nvm/versions/node/v0.12.18/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@2.15.11
+3 info using node@v0.12.18
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec { raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/mcoleman/Downloads/webrdp',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/mcoleman/.npm/WebRDP/0.1.0/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/mcoleman/.npm correctMkdir not in flight; initializing
+10 verbose tar pack [ '/Users/mcoleman/.npm/WebRDP/0.1.0/package.tgz',
+10 verbose tar pack   '/Users/mcoleman/Downloads/webrdp' ]
+11 verbose tarball /Users/mcoleman/.npm/WebRDP/0.1.0/package.tgz
+12 verbose folder /Users/mcoleman/Downloads/webrdp
+13 info prepublish WebRDP@0.1.0
+14 verbose addLocalTarball adding from inside cache /Users/mcoleman/.npm/WebRDP/0.1.0/package.tgz
+15 verbose correctMkdir /Users/mcoleman/.npm correctMkdir not in flight; initializing
+16 silly cache afterAdd WebRDP@0.1.0
+17 verbose afterAdd /Users/mcoleman/.npm/WebRDP/0.1.0/package/package.json not in flight; writing
+18 verbose correctMkdir /Users/mcoleman/.npm correctMkdir not in flight; initializing
+19 verbose afterAdd /Users/mcoleman/.npm/WebRDP/0.1.0/package/package.json written
+20 silly publish { name: 'WebRDP',
+20 silly publish   description: 'Web RDP',
+20 silly publish   version: '0.1.0',
+20 silly publish   homepage: 'https://github.com/Mikej81/WebRDP',
+20 silly publish   author: { name: 'Mikej81', email: 'stumpj@gmail.com' },
+20 silly publish   repository:
+20 silly publish    { type: 'git',
+20 silly publish      url: 'git+https://github.com/Mikej81/WebRDP.git' },
+20 silly publish   bugs: { url: 'https://github.com/Mikej81/WebRDP/issues' },
+20 silly publish   license: 'MIT',
+20 silly publish   licenses:
+20 silly publish    [ { type: 'MIT',
+20 silly publish        url: 'https://github.com/Mikej81/WebRDP/blob/master/LICENSE-MIT' } ],
+20 silly publish   main: 'app.js',
+20 silly publish   engines: { node: '0.12.7' },
+20 silly publish   scripts:
+20 silly publish    { start: 'node index',
+20 silly publish      test: 'snyk test',
+20 silly publish      standard: 'standard --verbose',
+20 silly publish      cleanmac: 'find . -name \'.DS_Store\' -type f -delete' },
+20 silly publish   dependencies:
+20 silly publish    { 'basic-auth': '^2.0.0',
+20 silly publish      colors: '^1.1.2',
+20 silly publish      debug: '^2.6.9',
+20 silly publish      express: '^4.15.5',
+20 silly publish      'express-session': '^1.15.6',
+20 silly publish      'express-socket.io-session': '^1.3.2',
+20 silly publish      morgan: '^1.8.2',
+20 silly publish      'node-rdpjs': '^0.3.0',
+20 silly publish      'read-config': '^1.6.0',
+20 silly publish      'socket.io': '^1.7.4',
+20 silly publish      validator: '^8.2.0' },
+20 silly publish   devDependencies:
+20 silly publish    { bithound: '^1.7.0',
+20 silly publish      grunt: '~0.4.5',
+20 silly publish      'grunt-contrib-copy': '^1.0.0',
+20 silly publish      'grunt-contrib-jshint': '~0.6.4',
+20 silly publish      'grunt-contrib-nodeunit': '~0.2.0',
+20 silly publish      'grunt-contrib-uglify': '^3.1.0',
+20 silly publish      'grunt-contrib-watch': '~0.5.3',
+20 silly publish      snazzy: '^7.0.0',
+20 silly publish      snyk: '^1.41.1',
+20 silly publish      standard: '^10.0.3' },
+20 silly publish   standard: { ignore: [ 'client/*.js', 'client/js/*.js' ] },
+20 silly publish   keywords: [],
+20 silly publish   readme: '\n# WebRDP [![GitHub version](https://badge.fury.io/gh/Mikej81%2FWebRDP.svg)](https://badge.fury.io/gh/Mikej81%2FWebRDP) [![Build Status](https://travis-ci.org/Mikej81/WebRDP.svg?branch=master)](https://travis-ci.org/Mikej81/WebRDP) [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg)](https://github.com/Mikej81/WebRDP) [![bitHound Overall Score](https://www.bithound.io/github/Mikej81/WebRDP/badges/score.svg)](https://www.bithound.io/github/Mikej81/WebRDP) [![bitHound Dependencies](https://www.bithound.io/github/Mikej81/WebRDP/badges/dependencies.svg)](https://www.bithound.io/github/Mikej81/WebRDP/master/dependencies/npm)\n\nWeb RDP Client using node-rdpjs, socket.io, (some)mstsc.js, and express\n\nA bare bones example of an HTML5 web-based RDP. We use RDP as a client on a host to proxy a Websocket / Socket.io connection to an RDP server.\n\n![alt text](https://i.imgur.com/ZD0XBkG.png "Screenshot")\n\n\n## Instructions\n\nInstall:  \n\n`git https://github.com/Mikej81/WebRDP.git`\n\n`npm install`\n\n`node app.js`\n\nUses basic credentials and IP from req.param.host.\n\nDomain is hardcoded, will work on that and more error handling for tab/browser close, etc.\n\n# Options\n\n## GET request vars / params\n\n* **domain/username/password** - BasicAuth\n* **host** - passed via the URI /rdp/host/[host_ip]\n\n## Config File Options\n\n## Examples\nusage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]\n\n\n## Contributing\nDo it!\n\n## Release History\n_(Nothing yet)_\n\n## License\nCopyright (c) 2017 Mikej81\nLicensed under the MIT license.\n',
+20 silly publish   readmeFilename: 'README.md',
+20 silly publish   gitHead: 'd547bee726c02312ff02c9b2fb5ba50e2b687e72',
+20 silly publish   _id: 'WebRDP@0.1.0',
+20 silly publish   _shasum: 'd67e59567f70b1896f595a8a65a90738494eb09f',
+20 silly publish   _from: '.' }
+21 verbose getPublishConfig undefined
+22 silly mapToRegistry name WebRDP
+23 silly mapToRegistry using default registry
+24 silly mapToRegistry registry https://registry.npmjs.org/
+25 silly mapToRegistry data { raw: 'WebRDP',
+25 silly mapToRegistry   scope: null,
+25 silly mapToRegistry   name: 'WebRDP',
+25 silly mapToRegistry   rawSpec: '',
+25 silly mapToRegistry   spec: 'latest',
+25 silly mapToRegistry   type: 'tag' }
+26 silly mapToRegistry uri https://registry.npmjs.org/WebRDP
+27 verbose publish registryBase https://registry.npmjs.org/
+28 silly publish uploading /Users/mcoleman/.npm/WebRDP/0.1.0/package.tgz
+29 verbose request uri https://registry.npmjs.org/WebRDP
+30 verbose request sending authorization for write operation
+31 info attempt registry request try #1 at 4:05:34 PM
+32 verbose request using bearer token for auth
+33 verbose request id 641e9283e8637db8
+34 http request PUT https://registry.npmjs.org/WebRDP
+35 http 400 https://registry.npmjs.org/WebRDP
+36 verbose headers { 'content-type': 'application/json',
+36 verbose headers   'cache-control': 'max-age=300',
+36 verbose headers   'content-length': '50',
+36 verbose headers   'accept-ranges': 'bytes',
+36 verbose headers   date: 'Wed, 27 Sep 2017 20:05:35 GMT',
+36 verbose headers   via: '1.1 varnish',
+36 verbose headers   connection: 'keep-alive',
+36 verbose headers   'x-served-by': 'cache-ewr18136-EWR',
+36 verbose headers   'x-cache': 'MISS',
+36 verbose headers   'x-cache-hits': '0',
+36 verbose headers   'x-timer': 'S1506542735.840629,VS0,VE724',
+36 verbose headers   vary: 'Accept-Encoding, Accept' }
+37 verbose request invalidating /Users/mcoleman/.npm/registry.npmjs.org/WebRDP on PUT
+38 error publish Failed PUT 400
+39 verbose stack Error: "WebRDP" is invalid for new packages : WebRDP
+39 verbose stack     at makeError (/Users/mcoleman/.nvm/versions/node/v0.12.18/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+39 verbose stack     at CachingRegistryClient.<anonymous> (/Users/mcoleman/.nvm/versions/node/v0.12.18/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+39 verbose stack     at Request._callback (/Users/mcoleman/.nvm/versions/node/v0.12.18/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+39 verbose stack     at Request.self.callback (/Users/mcoleman/.nvm/versions/node/v0.12.18/lib/node_modules/npm/node_modules/request/request.js:187:22)
+39 verbose stack     at Request.emit (events.js:110:17)
+39 verbose stack     at Request.<anonymous> (/Users/mcoleman/.nvm/versions/node/v0.12.18/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+39 verbose stack     at Request.emit (events.js:107:17)
+39 verbose stack     at IncomingMessage.<anonymous> (/Users/mcoleman/.nvm/versions/node/v0.12.18/lib/node_modules/npm/node_modules/request/request.js:965:12)
+39 verbose stack     at IncomingMessage.emit (events.js:129:20)
+39 verbose stack     at _stream_readable.js:908:16
+40 verbose statusCode 400
+41 verbose pkgid WebRDP
+42 verbose cwd /Users/mcoleman/Downloads/webrdp
+43 error Darwin 16.7.0
+44 error argv "/Users/mcoleman/.nvm/versions/node/v0.12.18/bin/node" "/Users/mcoleman/.nvm/versions/node/v0.12.18/bin/npm" "publish"
+45 error node v0.12.18
+46 error npm  v2.15.11
+47 error code E400
+48 error "WebRDP" is invalid for new packages : WebRDP
+49 error If you need help, you may report this error at:
+49 error     <https://github.com/npm/npm/issues>
+50 verbose exit [ 1, true ]
