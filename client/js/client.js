@@ -17,21 +17,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function() {
+(function () {
 	/**
 	 * Mouse button mapping
 	 * @param button {integer} client button number
 	 */
-	function mouseButtonMap(button) {
-		switch(button) {
-		case 0:
-			return 1;
-		case 2:
-			return 2;
-		default:
-			return 0;
-		}
-	};
+  function mouseButtonMap (button) {
+    switch (button) {
+      case 0:
+        return 1
+      case 2:
+        return 2
+      default:
+        return 0
+    }
+  };
 
 	/**
 	 * Mstsc client
@@ -39,96 +39,96 @@
 	 * bitmap processing
 	 * @param canvas {canvas} rendering element
 	 */
-	function Client(canvas) {
-		this.canvas = canvas;
+  function Client (canvas) {
+    this.canvas = canvas
 		// create renderer
-		this.render = new Mstsc.Canvas.create(this.canvas);
-		this.socket = null;
-		this.activeSession = false;
-		this.install();
-	}
+    this.render = new Mstsc.Canvas.create(this.canvas)
+    this.socket = null
+    this.activeSession = false
+    this.install()
+  }
 
-	Client.prototype = {
-		install : function () {
-			var self = this;
+  Client.prototype = {
+    install: function () {
+      var self = this
 			// bind mouse move event
-			this.canvas.addEventListener('mousemove', function (e) {
-				if (!self.socket) return;
+      this.canvas.addEventListener('mousemove', function (e) {
+        if (!self.socket) return
 
-				var offset = Mstsc.elementOffset(self.canvas);
-				self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, 0, false);
-				e.preventDefault || !self.activeSession();
-				return false;
-			});
-			this.canvas.addEventListener('mousedown', function (e) {
-				if (!self.socket) return;
+        var offset = Mstsc.elementOffset(self.canvas)
+        self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, 0, false)
+        e.preventDefault || !self.activeSession()
+        return false
+      })
+      this.canvas.addEventListener('mousedown', function (e) {
+        if (!self.socket) return
 
-				var offset = Mstsc.elementOffset(self.canvas);
-				self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), true);
-				e.preventDefault();
-				return false;
-			});
-			this.canvas.addEventListener('mouseup', function (e) {
-				if (!self.socket || !self.activeSession) return;
+        var offset = Mstsc.elementOffset(self.canvas)
+        self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), true)
+        e.preventDefault()
+        return false
+      })
+      this.canvas.addEventListener('mouseup', function (e) {
+        if (!self.socket || !self.activeSession) return
 
-				var offset = Mstsc.elementOffset(self.canvas);
-				self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), false);
-				e.preventDefault();
-				return false;
-			});
-			this.canvas.addEventListener('contextmenu', function (e) {
-				if (!self.socket || !self.activeSession) return;
+        var offset = Mstsc.elementOffset(self.canvas)
+        self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), false)
+        e.preventDefault()
+        return false
+      })
+      this.canvas.addEventListener('contextmenu', function (e) {
+        if (!self.socket || !self.activeSession) return
 
-				var offset = Mstsc.elementOffset(self.canvas);
-				self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), false);
-				e.preventDefault();
-				return false;
-			});
-			this.canvas.addEventListener('DOMMouseScroll', function (e) {
-				if (!self.socket || !self.activeSession) return;
+        var offset = Mstsc.elementOffset(self.canvas)
+        self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), false)
+        e.preventDefault()
+        return false
+      })
+      this.canvas.addEventListener('DOMMouseScroll', function (e) {
+        if (!self.socket || !self.activeSession) return
 
-				var isHorizontal = false;
-				var delta = e.detail;
-				var step = Math.round(Math.abs(delta) * 15 / 8);
+        var isHorizontal = false
+        var delta = e.detail
+        var step = Math.round(Math.abs(delta) * 15 / 8)
 
-				var offset = Mstsc.elementOffset(self.canvas);
-				self.socket.emit('wheel', e.clientX - offset.left, e.clientY - offset.top, step, delta > 0, isHorizontal);
-				e.preventDefault();
-				return false;
-			});
-			this.canvas.addEventListener('mousewheel', function (e) {
-				if (!self.socket || !self.activeSession) return;
+        var offset = Mstsc.elementOffset(self.canvas)
+        self.socket.emit('wheel', e.clientX - offset.left, e.clientY - offset.top, step, delta > 0, isHorizontal)
+        e.preventDefault()
+        return false
+      })
+      this.canvas.addEventListener('mousewheel', function (e) {
+        if (!self.socket || !self.activeSession) return
 
-				var isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
-				var delta = isHorizontal?e.deltaX:e.deltaY;
-				var step = Math.round(Math.abs(delta) * 15 / 8);
+        var isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY)
+        var delta = isHorizontal ? e.deltaX : e.deltaY
+        var step = Math.round(Math.abs(delta) * 15 / 8)
 
-				var offset = Mstsc.elementOffset(self.canvas);
-				self.socket.emit('wheel', e.clientX - offset.left, e.clientY - offset.top, step, delta > 0, isHorizontal);
-				e.preventDefault();
-				return false;
-			});
+        var offset = Mstsc.elementOffset(self.canvas)
+        self.socket.emit('wheel', e.clientX - offset.left, e.clientY - offset.top, step, delta > 0, isHorizontal)
+        e.preventDefault()
+        return false
+      })
 
 			// bind keyboard event
-			window.addEventListener('keydown', function (e) {
-				if (!self.socket || !self.activeSession) return;
+      window.addEventListener('keydown', function (e) {
+        if (!self.socket || !self.activeSession) return
 
-				self.socket.emit('scancode', Mstsc.scancode(e), true);
+        self.socket.emit('scancode', Mstsc.scancode(e), true)
 
-				e.preventDefault();
-				return false;
-			});
-			window.addEventListener('keyup', function (e) {
-				if (!self.socket || !self.activeSession) return;
+        e.preventDefault()
+        return false
+      })
+      window.addEventListener('keyup', function (e) {
+        if (!self.socket || !self.activeSession) return
 
-				self.socket.emit('scancode', Mstsc.scancode(e), false);
+        self.socket.emit('scancode', Mstsc.scancode(e), false)
 
-				e.preventDefault();
-				return false;
-			});
+        e.preventDefault()
+        return false
+      })
 
-			return this;
-		},
+      return this
+    },
 		/**
 		 * connect
 		 * @param ip {string} ip target for rdp
@@ -137,51 +137,46 @@
 		 * @param password {string} session password
 		 * @param next {function} asynchrone end callback
 		 */
-		connect : function (ip, domain, username, password, next) {
+    connect: function (next) {
 			// compute socket.io path (cozy cloud integration)
-			var parts = document.location.pathname.split('/')
-		      , base = parts.slice(0, parts.length - 1).join('/') + '/'
-		      , path = base + 'socket.io';
+      var parts = document.location.pathname.split('/'),
+		       base = parts.slice(0, parts.length - 1).join('/') + '/',
+		       path = base + 'socket.io'
 
 			// start connection
-			var self = this;
-			//this.socket = io(window.location.protocol + "//" + window.location.host, { "path": path}).on('rdp-connect', function() {
-			this.socket = io(window.location.protocol + "//" + window.location.host).on('rdp-connect', function() {
+      var self = this
+			// this.socket = io(window.location.protocol + "//" + window.location.host, { "path": path}).on('rdp-connect', function() {
+      this.socket = io(window.location.protocol + '//' + window.location.host).on('rdp-connect', function () {
 				// this event can be occured twice (RDP protocol stack artefact)
-				console.log('[WebRDP] connected');
-				self.activeSession = true;
-			}).on('rdp-bitmap', function(bitmap) {
-				console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel);
-				self.render.update(bitmap);
-			}).on('rdp-close', function() {
-				next(null);
-				console.log('[WebRDP] close');
-				self.activeSession = false;
-			}).on('rdp-error', function (err) {
-				next(err);
-				console.log('[WebRDP] error : ' + err.code + '(' + err.message + ')');
-				self.activeSession = false;
-			});
+        console.log('[WebRDP] connected')
+        self.activeSession = true
+      }).on('rdp-bitmap', function (bitmap) {
+        console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel)
+        self.render.update(bitmap)
+      }).on('rdp-close', function () {
+        next(null)
+        console.log('[WebRDP] close')
+        self.activeSession = false
+      }).on('rdp-error', function (err) {
+        next(err)
+        console.log('[WebRDP] error : ' + err.code + '(' + err.message + ')')
+        self.activeSession = false
+      })
 
 			// emit infos event
-			this.socket.emit('infos', {
-				ip : ip,
-				port : 3389,
-				screen : {
-					width : this.canvas.width,
-					height : this.canvas.height
-				},
-				domain : domain,
-				username : username,
-				password : password,
-				locale : Mstsc.locale()
-			});
-		}
-	}
+      this.socket.emit('infos', {
+        screen: {
+          width: this.canvas.width,
+          height: this.canvas.height
+        },
+        locale: Mstsc.locale()
+      })
+    }
+  }
 
-	Mstsc.client = {
-		create : function (canvas) {
-			return new Client(canvas);
-		}
-	}
-})();
+  Mstsc.client = {
+    create: function (canvas) {
+      return new Client(canvas)
+    }
+  }
+})()
