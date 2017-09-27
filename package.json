@@ -30,15 +30,7 @@
     "standard": "standard --verbose",
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
-<<<<<<< HEAD
-=======
-  "author": "Michael Coleman <stumpj@gmail.com>",
-  "license": "MIT",
-  "engines": {
-    "node": "0.12.7"
-  },
->>>>>>> origin/master
-  "dependencies": {
+"dependencies": {
     "basic-auth": "^2.0.0",
     "colors": "^1.1.2",
     "debug": "^2.6.9",
