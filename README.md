@@ -3,21 +3,30 @@
 
 
 ## Getting Started
-Install the module with: `npm install WebRDP`
 
-```javascript
-var WebRDP = require('WebRDP');
-WebRDP.awesome(); // "awesome"
-```
+Built around 0.12
+
+install:  
+
+`git https://github.com/Mikej81/WebRDP.git`
+
+`npm install`
+
+`node app.js`
+
+Uses basic credentials and IP from req.param.host.
+
+Domain is hardcoded, will work on that and more error handling for tab/browser close, etc.
 
 ## Documentation
 _(Coming soon)_
 
 ## Examples
-_(Coming soon)_
+usage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]
+![alt text](https://i.imgur.com/ZD0XBkG.png "Screenshot")
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Do it!
 
 ## Release History
 _(Nothing yet)_
