@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Editor preference files
+*.sublime-*
+
 # Runtime data
 pids
 *.pid
@@ -57,3 +60,5 @@ typings/
 # dotenv environment variables file
 .env
 
+#Mac Files
+.DS_Store

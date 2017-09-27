@@ -1,3 +1,0 @@
-default: true
-default2: '@{default}'
-env-var: '%{CONFIG_LOADER_TEST_VAR_DEF}'
