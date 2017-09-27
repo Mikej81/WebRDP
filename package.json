@@ -4,17 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "test": "snyk test",
+    "standard": "standard --verbose",
+    "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "author": "Michael Coleman <stumpj@gmail.com>",
   "license": "ISC",
   "engines": {
     "node": "0.12.7"
-  },
-  "scripts": {
-    "start": "node index",
-    "standard": "standard --verbose",
-    "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "dependencies": {
     "basic-auth": "^2.0.0",
@@ -30,6 +28,7 @@
     "validator": "^8.2.0"
   },
   "devDependencies": {
+    "snyk": "^1.41.1",
     "standard": "^10.0.3"
   },
   "standard": {
