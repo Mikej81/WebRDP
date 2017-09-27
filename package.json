@@ -11,6 +11,11 @@
   "engines": {
     "node": "0.12.7"
   },
+  "scripts": {
+    "start": "node index",
+    "standard": "standard --verbose",
+    "cleanmac": "find . -name '.DS_Store' -type f -delete"
+  },
   "dependencies": {
     "basic-auth": "^2.0.0",
     "colors": "^1.1.2",
@@ -23,5 +28,14 @@
     "read-config": "^1.6.0",
     "socket.io": "^1.7.4",
     "validator": "^8.2.0"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "standard": {
+    "ignore": [
+      "client/*.js",
+      "client/js/*.js"
+    ]
   }
 }
