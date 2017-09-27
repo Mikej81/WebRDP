@@ -2,6 +2,14 @@
 
 build around 0.12
 
+install:  
+
+`git https://github.com/Mikej81/WebRDP.git`
+
+`npm install`
+
+`node app.js`
+
 usage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]
 
 Uses basic credentials and IP from req.param.host.

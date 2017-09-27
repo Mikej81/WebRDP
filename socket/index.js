@@ -20,7 +20,7 @@ module.exports = function (socket) {
     }
 
     rdpClient = rdp.createClient({
-      domain: 'mydomain',
+      domain: socket.request.session.rdpdomain,
       userName: socket.request.session.username,
       password: socket.request.session.userpassword,
       enablePerf: true,
