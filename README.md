@@ -1,21 +1,31 @@
-# WebRDP [![GitHub version](https://badge.fury.io/gh/Mikej81%2FWebRDP.svg)](https://badge.fury.io/gh/Mikej81%2FWebRDP) [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg)](https://github.com/Mikej81/WebRDP)
+<<<<<<< HEAD
+# WebRDP [![Build Status](https://secure.travis-ci.org/Mikej81/WebRDP.png?branch=master)](http://travis-ci.org/Mikej81/WebRDP)
+=======
+# WebRDP [![GitHub version](https://badge.fury.io/gh/Mikej81%2FWebRDP.svg)](https://badge.fury.io/gh/Mikej81%2FWebRDP) [![Build Status](https://travis-ci.org/Mikej81/WebRDP.svg?branch=master)](https://travis-ci.org/Mikej81/WebRDP) [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg)](https://github.com/Mikej81/WebRDP) [![bitHound Overall Score](https://www.bithound.io/github/Mikej81/WebRDP/badges/score.svg)](https://www.bithound.io/github/Mikej81/WebRDP) [![bitHound Dependencies](https://www.bithound.io/github/Mikej81/WebRDP/badges/dependencies.svg)](https://www.bithound.io/github/Mikej81/WebRDP/master/dependencies/npm)
+>>>>>>> origin/master
 
-build around 0.12
+Web RDP
 
-install:  
+## Getting Started
+Install the module with: `npm install WebRDP`
 
-`git https://github.com/Mikej81/WebRDP.git`
+```javascript
+var WebRDP = require('WebRDP');
+WebRDP.awesome(); // "awesome"
+```
 
-`npm install`
+## Documentation
+_(Coming soon)_
 
-`node app.js`
+## Examples
+_(Coming soon)_
 
-usage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-Uses basic credentials and IP from req.param.host.
+## Release History
+_(Nothing yet)_
 
-Domain is hardcoded, will work on that and more error handling for tab/browser close, etc.
-
-More to come...
-
-![alt text](https://i.imgur.com/ZD0XBkG.png "Screenshot")
+## License
+Copyright (c) 2017 Mikej81  
+Licensed under the MIT license.
