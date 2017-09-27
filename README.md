@@ -1,12 +1,16 @@
 
 # WebRDP [![GitHub version](https://badge.fury.io/gh/Mikej81%2FWebRDP.svg)](https://badge.fury.io/gh/Mikej81%2FWebRDP) [![Build Status](https://travis-ci.org/Mikej81/WebRDP.svg?branch=master)](https://travis-ci.org/Mikej81/WebRDP) [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg)](https://github.com/Mikej81/WebRDP) [![bitHound Overall Score](https://www.bithound.io/github/Mikej81/WebRDP/badges/score.svg)](https://www.bithound.io/github/Mikej81/WebRDP) [![bitHound Dependencies](https://www.bithound.io/github/Mikej81/WebRDP/badges/dependencies.svg)](https://www.bithound.io/github/Mikej81/WebRDP/master/dependencies/npm)
 
+Web RDP Client using node-rdpjs, socket.io, (some)mstsc.js, and express
 
-## Getting Started
+A bare bones example of an HTML5 web-based RDP. We use RDP as a client on a host to proxy a Websocket / Socket.io connection to an RDP server.
 
-Built around 0.12
+![alt text](https://i.imgur.com/ZD0XBkG.png "Screenshot")
 
-install:  
+
+## Instructions
+
+Install:  
 
 `git https://github.com/Mikej81/WebRDP.git`
 
@@ -18,12 +22,18 @@ Uses basic credentials and IP from req.param.host.
 
 Domain is hardcoded, will work on that and more error handling for tab/browser close, etc.
 
-## Documentation
-_(Coming soon)_
+# Options
+
+## GET request vars / params
+
+* **domain/username/password** - BasicAuth
+* **host** - passed via the URI /rdp/host/[host_ip]
+
+## Config File Options
 
 ## Examples
 usage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]
-![alt text](https://i.imgur.com/ZD0XBkG.png "Screenshot")
+
 
 ## Contributing
 Do it!
