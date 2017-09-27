@@ -1,4 +1,4 @@
-# WebRDP [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg)](https://github.com/Mikej81/WebRDP)
+# WebRDP [![GitHub version](https://badge.fury.io/gh/Mikej81%2FWebRDP.svg)](https://badge.fury.io/gh/Mikej81%2FWebRDP) [![Known Vulnerabilities](https://snyk.io/test/github/snyk/goof/badge.svg)](https://github.com/Mikej81/WebRDP)
 
 build around 0.12
 
