@@ -1,7 +1,7 @@
 {
   "name": "WebRDP",
   "description": "Web RDP",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "homepage": "https://github.com/Mikej81/WebRDP",
   "author": {
     "name": "Mikej81",
@@ -14,6 +14,7 @@
   "bugs": {
     "url": "https://github.com/Mikej81/WebRDP/issues"
   },
+  "license": "MIT",
   "licenses": [
     {
       "type": "MIT",
