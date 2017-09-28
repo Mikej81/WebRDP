@@ -42,6 +42,7 @@
     "morgan": "^1.8.2",
     "node-rdpjs": "^0.3.0",
     "read-config": "^1.6.0",
+    "rle": "^1.0.2",
     "socket.io": "^1.7.4",
     "validator": "^8.2.0"
   },
