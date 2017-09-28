@@ -23,7 +23,7 @@ Uses basic credentials and IP from req.param.host.
 Domain is hardcoded, will work on that and more error handling for tab/browser close, etc.
 
 # Options
-## Screen capture OnMousClick
+## Screen capture OnMouseClick
 This is currently hardcoded, will add the option to enable/disable in config file and/or header value.
 
 ## GET request vars / params
