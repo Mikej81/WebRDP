@@ -31,7 +31,7 @@
     "standard": "standard --verbose",
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
-"dependencies": {
+  "dependencies": {
     "basic-auth": "^2.0.0",
     "colors": "^1.1.2",
     "debug": "^2.6.9",

@@ -153,6 +153,11 @@
       }).on('rdp-bitmap', function (bitmap) {
         console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel)
         self.render.update(bitmap)
+      }).on('screencap', function(bitmap) {
+        next(null)
+        var canvas = document.getElementsByTagName('canvas')
+        var dataUrl = canvas[0].toDataURL()
+        self.socket.emit('savescreen', dataUrl)
       }).on('rdp-close', function () {
         next(null)
         console.log('[WebRDP] close')

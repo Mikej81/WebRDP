@@ -10,7 +10,7 @@ exports.basicAuth = function basicAuth (req, res, next) {
   if (myAuth) {
     var userstr = myAuth.name.toString()
     if (userstr.indexOf('\\') > -1) {
-      console.log(myAuth.name)
+      //console.log(myAuth.name)
       var parts = myAuth.name.split('\\')
       req.session.rdpdomain = parts[0].replace('\\', '')
       req.session.username = parts[1].replace('\\', '')

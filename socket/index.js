@@ -1,4 +1,6 @@
 var rdp = require('node-rdpjs')
+var fs = require('fs')
+var base64Img = require('base64-img')
 
 /**
  * Create proxy between rdp layer and socket io
@@ -13,6 +15,8 @@ module.exports = function (socket) {
     return
   }
   var rdpClient = null
+  var screenBuff = null
+
   socket.on('infos', function (infos) {
     if (rdpClient) {
         // clean older connection
@@ -31,6 +35,7 @@ module.exports = function (socket) {
     }).on('connect', function () {
       socket.emit('rdp-connect')
     }).on('bitmap', function (bitmap) {
+      screenBuff = bitmap
       socket.emit('rdp-bitmap', bitmap)
     }).on('close', function () {
       socket.emit('rdp-close')
@@ -39,8 +44,16 @@ module.exports = function (socket) {
     }).connect(socket.request.session.host, 3389)
   }).on('mouse', function (x, y, button, isPressed) {
     if (!rdpClient) return
-
+    if(isPressed) {
+      socket.emit('screencap')
+    }
     rdpClient.sendPointerEvent(x, y, button, isPressed)
+  }).on('savescreen', function (screen) {
+    if (!rdpClient) return
+      var newDate = new Date();
+      var screenCapDate = parseInt(newDate.getMonth()+1)+'-'+newDate.getDate()+'-'+newDate.getFullYear()+'-'+newDate.getTime()
+      //var screenshot = fs.writeFile('./' + screenCapDate + '-' + socket.request.session.username + '.jpg', screen, function (error) { })
+      var screenCapDate = base64Img.img(screen, './', screenCapDate + '-' + socket.request.session.username, function(err, filepath) {})
   }).on('wheel', function (x, y, step, isNegative, isHorizontal) {
     if (!rdpClient) {
       return
@@ -48,7 +61,6 @@ module.exports = function (socket) {
     rdpClient.sendWheelEvent(x, y, step, isNegative, isHorizontal)
   }).on('scancode', function (code, isPressed) {
     if (!rdpClient) return
-
     rdpClient.sendKeyEventScancode(code, isPressed)
   }).on('unicode', function (code, isPressed) {
     if (!rdpClient) return
