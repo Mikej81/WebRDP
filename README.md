@@ -23,6 +23,8 @@ Uses basic credentials and IP from req.param.host.
 Domain is hardcoded, will work on that and more error handling for tab/browser close, etc.
 
 # Options
+## Screen capture OnMousClick
+This is currently hardcoded, will add the option to enable/disable in config file and/or header value.
 
 ## GET request vars / params
 
@@ -34,6 +36,9 @@ Domain is hardcoded, will work on that and more error handling for tab/browser c
 ## Examples
 usage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]
 
+## Todo
+* Add keylogging to syslog on crlf, or whatever.
+* Cleanup code.
 
 ## Contributing
 Do it!
