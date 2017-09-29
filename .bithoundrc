@@ -16,6 +16,7 @@
         ]
     },
     "ignore": [
-        "client/js/**"
+        "client/js/**",
+	"**/node_modules/**"
     ]
 }
