@@ -28,16 +28,13 @@
   "scripts": {
     "start": "node index",
     "test": "snyk test",
-    "standard": "standard --verbose | snazzy",
-    "build": "grunt copy concat uglify",
     "standard": "standard --verbose",
+    "build": "grunt copy concat uglify",
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "dependencies": {
-    "array-to-image": "^1.0.0",
     "base64-img": "^1.0.3",
     "basic-auth": "^2.0.0",
-    "bmp-js": "0.0.3",
     "canvas-prebuilt": "^1.4.0",
     "colors": "^1.1.2",
     "debug": "^2.6.9",
