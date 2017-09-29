@@ -1,7 +1,29 @@
-JavaScript: true
-Ruby: false
-Python: false
-PHP: false
-
+---
+engines:
+  rubocop:
+    enabled: false
+  javascript:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - "javascript"
+  fixme:
+    enabled: true
+    exclude_paths:
+      - client/
+  markdownlint:
+    enabled: true
+    checks:
+      MD002: # "First header should be a h1 header"
+        enabled: false
+  shellcheck:
+    enabled: true
+ratings:
+  paths:
+  - "bin/*"
+  - "**.rb"
+  - "**.md"
 exclude_paths:
-- client/
+  - client/
