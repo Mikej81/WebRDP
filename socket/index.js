@@ -3,6 +3,8 @@ var fs = require('fs')
 var base64Img = require('base64-img')
 var rle = require('rle')
 var rdprle = require('../rle.js')
+var bmp = require("bmp-js")
+
 
   /**
    * decompress bitmap from RLE algorithm
@@ -105,10 +107,11 @@ module.exports = function (socket) {
     if (!rdpClient) return
     if(isPressed) {
       //console.log(screenBuff);
-      var rleDecomp = decompress(screenBuff)
-      var base64Encoded = new Buffer(new Uint8Array(rleDecomp)).toString('base64');
-      //console.log(base64Encoded)
-      //var screenshot = fs.writeFile('./tesfile.png', base64Encoded, function (error) { })
+      var cleanBit = bitmapUpdate(screenBuff)
+      var rawData = bmp.encode(cleanBit)
+      //console.log(rawData)
+      //console.log(cleanBit.data.toString('base64'))
+      //var screensave = base64Img.img(rawData.data.toString('base64'),'./', + '-test-' + socket.request.session.username, function(err, filepath) {})
       socket.emit('screencap')
     }
     rdpClient.sendPointerEvent(x, y, button, isPressed)
@@ -136,3 +139,14 @@ module.exports = function (socket) {
     rdpClient.close()
   })
 }
+function bitmapUpdate(bitmap) {
+      var output = null;
+      if (bitmap.isCompress) {
+        output = decompress(bitmap);
+      }
+      else {
+        output = reverse(bitmap);
+      }
+      return output
+}
+
