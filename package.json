@@ -28,7 +28,7 @@
   "scripts": {
     "start": "node index",
     "test": "snyk test",
-    "standard": "standard --verbose",
+    "standard": "standard --verbose | snazzy",
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "dependencies": {
@@ -63,7 +63,8 @@
   "standard": {
     "ignore": [
       "client/*.js",
-      "client/js/*.js"
+      "client/js/*.js",
+      "src/*.js"
     ]
   },
   "keywords": []

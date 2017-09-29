@@ -1,48 +1,34 @@
-'use strict';
-
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
-    nodeunit: {
-      files: ['test/**/*_test.js'],
+    pkg: grunt.file.readJSON('package.json'),
+    copy: {
+      main: {
+      }
     },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
+    concat: {
+      css: {
+        src: ['src/*.css'],
+        dest: 'client/css/webrdp.css'
       },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      lib: {
-        src: ['lib/**/*.js']
-      },
-      test: {
-        src: ['test/**/*.js']
-      },
+      js: {
+        src: ['src/*.js'],
+        dest: 'client/js/webrdp.js'
+      }
     },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      lib: {
-        files: '<%= jshint.lib.src %>',
-        tasks: ['jshint:lib', 'nodeunit']
-      },
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
-      },
-    },
-  });
+    uglify: {
+      build: {
+        src: ['src/canvas.js', 'src/client.js', 'src/keyboard.js', 'src/mstsc.js', 'src/rle.js'],
+        dest: 'client/js/webrdp.min.js'
+      }
+    }
+  })
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  // Load the plugin that provides the "uglify" task.
+  grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-contrib-concat')
+  grunt.loadNpmTasks('grunt-contrib-uglify')
 
-  // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
-
-};
+  // Default task(s).
+  grunt.registerTask('default', ['copy', 'concat', 'uglify'])
+}

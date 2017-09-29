@@ -7,12 +7,3 @@
     flex: 0 1 auto;
     z-index: 1;
 }
-
-#footer {
-    display: inline-block;
-    color: rgb(240, 240, 240);
-    background-color: rgb(50, 50, 50);
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: left;
-}

@@ -1,7 +1,7 @@
 var rdp = require('node-rdpjs')
-var fs = require('fs')
+// var fs = require('fs')
 var base64Img = require('base64-img')
-var rdprle = require('../rle.js')
+// var rdprle = require('../rle.js')
 
 /**
  * Create proxy between rdp layer and socket io
@@ -16,7 +16,7 @@ module.exports = function (socket) {
     return
   }
   var rdpClient = null
-  var screenBuff = null
+  // var screenBuff = null
 
   socket.on('infos', function (infos) {
     if (rdpClient) {
@@ -38,7 +38,7 @@ module.exports = function (socket) {
     }).on('connect', function () {
       socket.emit('rdp-connect')
     }).on('bitmap', function (bitmap) {
-      screenBuff = bitmap
+      // screenBuff = bitmap
       socket.emit('rdp-bitmap', bitmap)
     }).on('close', function () {
       socket.emit('rdp-close')
@@ -47,16 +47,16 @@ module.exports = function (socket) {
     }).connect(socket.request.session.host, 3389)
   }).on('mouse', function (x, y, button, isPressed) {
     if (!rdpClient) return
-    if(isPressed) {
-      //console.log(screenBuff);
-      socket.emit('screencap')
+    if (isPressed) {
+      // console.log(screenBuff);
+      // socket.emit('screencap')
     }
     rdpClient.sendPointerEvent(x, y, button, isPressed)
   }).on('savescreen', function (screen) {
     if (!rdpClient) return
-      var newDate = new Date();
-      var screenCapDate = parseInt(newDate.getMonth()+1)+'-'+newDate.getDate()+'-'+newDate.getFullYear()+'-'+newDate.getTime()
-      base64Img.img(screen, './screenshots', screenCapDate + '-' + socket.request.session.username, function(err, filepath) {})
+    var newDate = new Date()
+    var screenCapDate = parseInt(newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear() + '-' + newDate.getTime()
+    base64Img.img(screen, './screenshots', screenCapDate + '-' + socket.request.session.username, function (err, filepath) { console.log(err) })
   }).on('wheel', function (x, y, step, isNegative, isHorizontal) {
     if (!rdpClient) {
       return
@@ -75,14 +75,3 @@ module.exports = function (socket) {
     rdpClient.close()
   })
 }
-function bitmapUpdate(bitmap) {
-      var output = null;
-      if (bitmap.isCompress) {
-        output = decompress(bitmap);
-      }
-      else {
-        output = reverse(bitmap);
-      }
-      return output
-}
-
