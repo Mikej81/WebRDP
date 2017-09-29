@@ -28,3 +28,4 @@ exclude_paths:
 - node_modules/
 - client/
 - src/
+- rle.js
