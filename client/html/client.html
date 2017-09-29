@@ -14,8 +14,8 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/css/signin.css" rel="stylesheet">
-     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link hred="/css/webrdp.css" rel="stylesheet">
+
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="/js/mstsc.js"></script>
 	<script type="text/javascript" src="/js/keyboard.js"></script>
@@ -23,33 +23,37 @@
 	<script type="text/javascript" src="/js/client.js"></script>
 	<script type="text/javascript" src="/js/canvas.js"></script>
     <script language="javascript">
-    var client = null;
-
-    function load (canvas) {
-    	client = Mstsc.client.create(Mstsc.$(canvas));
-    }
-
-	function connect () {
-		Mstsc.$("main").style.display = 'none';
-		var canvas = Mstsc.$("myCanvas");
-		canvas.style.display = 'inline';
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
-		client.connect( function (err) {
-			Mstsc.$("myCanvas").style.display = 'none';
-			Mstsc.$("main").style.display = 'inline';
-		});
-	}
 
 </script>
   </head>
 
   <body onload='load("myCanvas")'>
+    <div id="header">PLACEHOLDER</div>
     <div id="main" class="container">
     </div> <!-- /container -->
     <canvas id="myCanvas" style="display:none">
   </body>
   <script>
+    var client = null;
+
+    function load (canvas) {
+        client = Mstsc.client.create(Mstsc.$(canvas));
+    }
+
+    function connect () {
+        Mstsc.$("main").style.display = 'none';
+        var canvas = Mstsc.$("myCanvas");
+        canvas.style.display = 'inline';
+        var headerOffset = document.getElementById("header");
+        var yoffset = headerOffset.scrollHeight;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - (yoffset + 5);
+        client.connect( function (err) {
+            Mstsc.$("myCanvas").style.display = 'none';
+            Mstsc.$("main").style.display = 'inline';
+        });
+    }
+
     var socket = io.connect();
     socket.on('connect', function(data) {
         socket.emit('ready', 'Client connected...[client-side]');

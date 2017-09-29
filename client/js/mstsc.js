@@ -24,13 +24,13 @@
 	 */
 	Mstsc = function () {
 	}
-	
+
 	Mstsc.prototype = {
 		// shortcut
 		$ : function (id) {
 			return document.getElementById(id);
 		},
-		
+
 		/**
 		 * Compute screen offset for a target element
 		 * @param el {DOM element}
@@ -46,7 +46,7 @@
 		    }
 		    return { top: y, left: x };
 		},
-		
+
 		/**
 		 * Try to detect browser
 		 * @returns {String} [firefox|chrome|ie]
@@ -55,18 +55,18 @@
 			if (typeof InstallTrigger !== 'undefined') {
 				return 'firefox';
 			}
-			
+
 			if (!!window.chrome) {
 				return 'chrome';
 			}
-			
+
 			if (!!document.docuemntMode) {
 				return 'ie';
 			}
-			
+
 			return null;
 		},
-		
+
 		/**
 		 * Try to detect language
 		 * @returns
@@ -75,7 +75,7 @@
 			return window.navigator.userLanguage || window.navigator.language;
 		}
 	}
-	
+
 })();
 
 this.Mstsc = new Mstsc();

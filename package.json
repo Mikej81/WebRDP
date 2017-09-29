@@ -32,9 +32,11 @@
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "dependencies": {
+    "array-to-image": "^1.0.0",
     "base64-img": "^1.0.3",
     "basic-auth": "^2.0.0",
     "bmp-js": "0.0.3",
+    "canvas-prebuilt": "^1.4.0",
     "colors": "^1.1.2",
     "debug": "^2.6.9",
     "express": "^4.15.5",
@@ -43,7 +45,6 @@
     "morgan": "^1.8.2",
     "node-rdpjs": "^0.3.0",
     "read-config": "^1.6.0",
-    "rle": "^1.0.2",
     "socket.io": "^1.7.4",
     "validator": "^8.2.0"
   },

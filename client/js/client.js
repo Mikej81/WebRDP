@@ -153,6 +153,10 @@
       }).on('rdp-bitmap', function (bitmap) {
         console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel)
         self.render.update(bitmap)
+      }).on('headerBackground', function (data) {
+        document.getElementById('header').style.backgroundColor = data
+      }).on('header', function (data) {
+        document.getElementById('header').innerHTML = data
       }).on('screencap', function() {
         var canvasimg = document.getElementsByTagName('canvas')
         var dataUrl = canvasimg[0].toDataURL()

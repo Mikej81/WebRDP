@@ -1,67 +1,7 @@
 var rdp = require('node-rdpjs')
 var fs = require('fs')
 var base64Img = require('base64-img')
-var rle = require('rle')
 var rdprle = require('../rle.js')
-var bmp = require("bmp-js")
-
-
-  /**
-   * decompress bitmap from RLE algorithm
-   * @param bitmap  {object} bitmap object of bitmap event of node-rdpjs
-   */
-  function decompress (bitmap) {
-    var fName = null;
-    switch (bitmap.bitsPerPixel) {
-    case 15:
-      fName = 'bitmap_decompress_15';
-      break;
-    case 16:
-      fName = 'bitmap_decompress_16';
-      break;
-    case 24:
-      fName = 'bitmap_decompress_24';
-      break;
-    case 32:
-      fName = 'bitmap_decompress_32';
-      break;
-    default:
-      throw 'invalid bitmap data format';
-    }
-
-    var input = new Uint8Array(bitmap.data);
-    var inputPtr = rdprle._malloc(input.length);
-    var inputHeap = new Uint8Array(rdprle.HEAPU8.buffer, inputPtr, input.length);
-    inputHeap.set(input);
-
-    var output_width = bitmap.destRight - bitmap.destLeft + 1;
-    var output_height = bitmap.destBottom - bitmap.destTop + 1;
-    var ouputSize = output_width * output_height * 4;
-    var outputPtr = rdprle._malloc(ouputSize);
-
-    var outputHeap = new Uint8Array(rdprle.HEAPU8.buffer, outputPtr, ouputSize);
-
-    var res = rdprle.ccall(fName,
-      'number',
-      ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
-      [outputHeap.byteOffset, output_width, output_height, bitmap.width, bitmap.height, inputHeap.byteOffset, input.length]
-    );
-
-    var output = new Uint8ClampedArray(outputHeap.buffer, outputHeap.byteOffset, ouputSize);
-
-    rdprle._free(inputPtr);
-    rdprle._free(outputPtr);
-
-    return { width : output_width, height : output_height, data : output };
-  }
-
-  /**
-   * Un compress bitmap are reverse in y axis
-   */
-  function reverse (bitmap) {
-    return { width : bitmap.width, height : bitmap.height, data : new Uint8ClampedArray(bitmap.data) };
-  }
-
 
 /**
  * Create proxy between rdp layer and socket io
@@ -83,6 +23,8 @@ module.exports = function (socket) {
         // clean older connection
       rdpClient.close()
     }
+    socket.emit('headerBackground', 'green')
+    socket.emit('header', '//HEADER//')
 
     rdpClient = rdp.createClient({
       domain: socket.request.session.rdpdomain,
@@ -107,11 +49,6 @@ module.exports = function (socket) {
     if (!rdpClient) return
     if(isPressed) {
       //console.log(screenBuff);
-      var cleanBit = bitmapUpdate(screenBuff)
-      var rawData = bmp.encode(cleanBit)
-      //console.log(rawData)
-      //console.log(cleanBit.data.toString('base64'))
-      //var screensave = base64Img.img(rawData.data.toString('base64'),'./', + '-test-' + socket.request.session.username, function(err, filepath) {})
       socket.emit('screencap')
     }
     rdpClient.sendPointerEvent(x, y, button, isPressed)
@@ -119,8 +56,7 @@ module.exports = function (socket) {
     if (!rdpClient) return
       var newDate = new Date();
       var screenCapDate = parseInt(newDate.getMonth()+1)+'-'+newDate.getDate()+'-'+newDate.getFullYear()+'-'+newDate.getTime()
-      //var screenshot = fs.writeFile('./' + screenCapDate + '-' + socket.request.session.username + '.jpg', screen, function (error) { })
-      var screenCapDate = base64Img.img(screen, './', screenCapDate + '-' + socket.request.session.username, function(err, filepath) {})
+      base64Img.img(screen, './screenshots', screenCapDate + '-' + socket.request.session.username, function(err, filepath) {})
   }).on('wheel', function (x, y, step, isNegative, isHorizontal) {
     if (!rdpClient) {
       return
