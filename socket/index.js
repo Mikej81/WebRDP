@@ -132,3 +132,16 @@ module.exports = function (socket) {
     rdpClient.close()
   })
 }
+<<<<<<< HEAD
+=======
+function bitmapUpdate(bitmap) {
+      var output = null;
+      if (bitmap.isCompress) {
+        output = decompress(bitmap);
+      }
+      else {
+        output = reverse(bitmap);
+      }
+      return output
+}
+>>>>>>> origin/master
