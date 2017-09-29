@@ -64,7 +64,7 @@
         if (!self.socket) return
 
         var offset = Mstsc.elementOffset(self.canvas)
-        self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), true)
+        self.socket.emit('mouse', e.clientX - offset.left, e.clientY - offset.top, mouseButtonMap(e.button), true, self.canvas.toDataURL())
         e.preventDefault()
         return false
       })
@@ -153,14 +153,12 @@
       }).on('rdp-bitmap', function (bitmap) {
         console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel)
         self.render.update(bitmap)
+      }).on('title', function (data) {
+        document.title = data
       }).on('headerBackground', function (data) {
         document.getElementById('header').style.backgroundColor = data
       }).on('header', function (data) {
         document.getElementById('header').innerHTML = data
-      }).on('screencap', function() {
-        var canvasimg = document.getElementsByTagName('canvas')
-        var dataUrl = canvasimg[0].toDataURL()
-        self.socket.emit('savescreen', dataUrl)
       }).on('rdp-close', function () {
         next(null)
         console.log('[WebRDP] close')
