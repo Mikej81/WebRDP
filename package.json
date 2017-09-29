@@ -28,12 +28,9 @@
   "scripts": {
     "start": "node index",
     "test": "snyk test",
-<<<<<<< HEAD
     "standard": "standard --verbose | snazzy",
-=======
     "build": "grunt copy concat uglify",
     "standard": "standard --verbose",
->>>>>>> origin/master
     "cleanmac": "find . -name '.DS_Store' -type f -delete"
   },
   "dependencies": {
