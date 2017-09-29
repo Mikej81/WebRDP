@@ -12,6 +12,10 @@
     "port": 3389,
     "readyTimeout": 20000
   },
+  "logging": {
+    "logScreenOnMouseclicks": true,
+    "logKeypress": false
+  },
   "useminified": false,
   "header": {
     "text": null,

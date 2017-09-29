@@ -153,6 +153,8 @@
       }).on('rdp-bitmap', function (bitmap) {
         console.log('[WebRDP] bitmap update bpp : ' + bitmap.bitsPerPixel)
         self.render.update(bitmap)
+      }).on('title', function (data) {
+        document.title = data
       }).on('headerBackground', function (data) {
         document.getElementById('header').style.backgroundColor = data
       }).on('header', function (data) {

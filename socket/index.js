@@ -79,6 +79,11 @@ module.exports = function (socket) {
         // clean older connection
       rdpClient.close()
     }
+    console.log('WebRDP Login: user=' + socket.request.session.username + ' from=' + socket.handshake.address + ' host=' + socket.request.session.rdp.host + ' port=' + socket.request.session.rdp.port + ' sessionID=' + socket.request.sessionID + '/' + socket.id + ' allowreplay=' + socket.request.session.rdp.allowreplay)
+    socket.emit('title', 'rdp://' + socket.request.session.rdp.host)
+    socket.request.session.rdp.header.background && socket.emit('headerBackground', socket.request.session.rdp.header.background)
+    socket.request.session.rdp.header.name && socket.emit('header', socket.request.session.rdp.header.name)
+
     socket.emit('headerBackground', 'green')
     socket.emit('header', '//HEADER//')
 
