@@ -27,3 +27,4 @@ ratings:
 exclude_paths:
 - node_modules/
 - client/
+- src/
