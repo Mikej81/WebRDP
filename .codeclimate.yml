@@ -1,0 +1,4 @@
+## other configuration excluded from example...
+exclude_paths:
+- "client/"
+- "node_modules/"
