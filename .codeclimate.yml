@@ -21,9 +21,8 @@ ratings:
   - "**.js"
   - "**.jsx"
   - "**.module"
-  - "**.php"
-  - "**.py"
-  - "**.rb"
+  - "**.html"
+
 exclude_paths:
 - node_modules/
 - client/
