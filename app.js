@@ -32,7 +32,7 @@ app.get('/', function (req, res, next) {
 
 app.get('/rdp/host/:host?', function (req, res, next) {
   req.session.host = req.params.host
-  res.sendFile(__dirname + '/client/html/client.html')
+  res.sendFile(path.join(__dirname, '/client/html/client.html'))
   req.session.rdp = {
     host: (validator.isIP(req.params.host + '') && req.params.host) ||
     (validator.isFQDN(req.params.host) && req.params.host) ||
