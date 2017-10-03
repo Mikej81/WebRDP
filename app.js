@@ -52,8 +52,8 @@ app.get('/rdp/host/:host?', function (req, res, next) {
     readyTimeout: (validator.isInt(req.query.readyTimeout + '', {min: 1, max: 300000}) &&
       req.query.readyTimeout) || config.rdp.readyTimeout
   }
-  req.session.rdp.header.name && validator.escape(req.session.rdp.header.name)
-  req.session.rdp.header.background && validator.escape(req.session.rdp.header.background)
+  if (req.session.rdp.header.name) validator.escape(req.session.rdp.header.name)
+  if (req.session.rdp.header.background) validator.escape(req.session.rdp.header.background)
 })
 
 // Express error handling
