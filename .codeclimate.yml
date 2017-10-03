@@ -23,6 +23,6 @@ ratings:
 
 exclude_paths:
 - node_modules/
-- client/
+- client/js/
 - src/
 - rle.js
