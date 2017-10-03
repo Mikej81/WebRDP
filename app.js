@@ -53,8 +53,7 @@ app.get('/rdp/host/:host?', function (req, res, next) {
       req.query.readyTimeout) || config.rdp.readyTimeout
   }
   req.session.rdp.header.name && validator.escape(req.session.rdp.header.name)
-  req.session.rdp.header.background &&
-  validator.escape(req.session.rdp.header.background)
+  req.session.rdp.header.background && validator.escape(req.session.rdp.header.background)
 })
 
 // Express error handling
