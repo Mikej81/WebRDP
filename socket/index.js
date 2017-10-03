@@ -52,7 +52,7 @@ module.exports = function (socket) {
     if (!rdpClient) return
     if (isPressed) {
       var newDate = new Date()
-      var screenCapDate = parseInt(newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear() + '-' + newDate.getTime()
+      var screenCapDate = parseInt((newDate.getMonth() + 1), 10) + '-' + newDate.getDate() + '-' + newDate.getFullYear() + '-' + newDate.getTime()
       base64Img.img(canvas, './screenshots', screenCapDate + '-' + socket.request.session.username, function (err, filepath) { console.log(err) })
     }
     rdpClient.sendPointerEvent(x, y, button, isPressed)

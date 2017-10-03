@@ -24,10 +24,10 @@ var socket = require('./socket')
 // Express
 app.use(session)
 app.use(myutil.basicAuth)
-app.use(express.static(__dirname + '/client'))
+app.use(express.static(path.join(__dirname, '/client')))
 
 app.get('/', function (req, res, next) {
-  res.sendFile(__dirname + '/client/html/index.html')
+  res.sendFile(path.join(__dirname, '/client/html/index.html'))
 })
 
 app.get('/rdp/host/:host?', function (req, res, next) {
@@ -72,8 +72,7 @@ server.listen(4200)
 // socket.io
 // expose express session with socket.request.session
 io.use(function (socket, next) {
-  (socket.request.res) ? session(socket.request, socket.request.res, next)
-    : next()
+  (socket.request.res) ? session(socket.request, socket.request.res, next) : next()
 })
 
 // bring up socket
