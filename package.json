@@ -44,7 +44,7 @@
     "morgan": "^1.8.2",
     "node-rdpjs": "^0.3.0",
     "read-config": "^1.6.0",
-    "socket.io": "^1.7.4",
+    "socket.io": "^2.0.0",
     "validator": "^8.2.0"
   },
   "devDependencies": {
