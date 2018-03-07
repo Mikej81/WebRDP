@@ -1,7 +1,6 @@
 var rdp = require('node-rdpjs')
-// var fs = require('fs')
+var screen = require('./screen.js')
 var base64Img = require('base64-img')
-// var rle = require('../rle.js')
 
 /**
  * Create proxy between rdp layer and socket io
@@ -36,6 +35,7 @@ module.exports = function (socket) {
       password: socket.request.session.userpassword,
       enablePerf: true,
       autoLogin: true,
+      decompress: true,
       screen: infos.screen,
       locale: infos.locale,
       logLevel: process.argv[2] || 'INFO'
