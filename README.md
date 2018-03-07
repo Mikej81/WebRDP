@@ -48,4 +48,4 @@ _(Nothing yet)_
 
 ## License
 Copyright (c) 2017 Mikej81
-Licensed under the MIT license.
+Licensed under the GPL license.
