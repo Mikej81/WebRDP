@@ -78,7 +78,7 @@ npm run lint         # eslint
 npm test             # vitest
 ```
 
-## Architecture
+## (new) Architecture
 
 ```
 Browser (Canvas + Socket.io client)
