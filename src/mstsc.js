@@ -3,7 +3,7 @@
  *
  * This file is part of mstsc.js.
  *
- * mstsc.j is free software: you can redistribute it and/or modify
+ * mstsc.js is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
@@ -17,65 +17,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function() {
+export function $(id) {
+  return document.getElementById(id);
+}
 
-	/**
-	 * Use for domain declaration
-	 */
-	Mstsc = function () {
-	}
+export function elementOffset(el) {
+  let x = 0;
+  let y = 0;
+  while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+    x += el.offsetLeft - el.scrollLeft;
+    y += el.offsetTop - el.scrollTop;
+    el = el.offsetParent;
+  }
+  return { top: y, left: x };
+}
 
-	Mstsc.prototype = {
-		// shortcut
-		$ : function (id) {
-			return document.getElementById(id);
-		},
+export function browser() {
+  if (typeof InstallTrigger !== 'undefined') {
+    return 'firefox';
+  }
+  if (window.chrome) {
+    return 'chrome';
+  }
+  if (document.documentMode) {
+    return 'ie';
+  }
+  return null;
+}
 
-		/**
-		 * Compute screen offset for a target element
-		 * @param el {DOM element}
-		 * @return {top : {integer}, left {integer}}
-		 */
-		elementOffset : function (el) {
-		    var x = 0;
-		    var y = 0;
-		    while (el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop )) {
-		        x += el.offsetLeft - el.scrollLeft;
-		        y += el.offsetTop - el.scrollTop;
-		        el = el.offsetParent;
-		    }
-		    return { top: y, left: x };
-		},
-
-		/**
-		 * Try to detect browser
-		 * @returns {String} [firefox|chrome|ie]
-		 */
-		browser : function () {
-			if (typeof InstallTrigger !== 'undefined') {
-				return 'firefox';
-			}
-
-			if (!!window.chrome) {
-				return 'chrome';
-			}
-
-			if (!!document.docuemntMode) {
-				return 'ie';
-			}
-
-			return null;
-		},
-
-		/**
-		 * Try to detect language
-		 * @returns
-		 */
-		locale : function () {
-			return window.navigator.userLanguage || window.navigator.language;
-		}
-	}
-
-})();
-
-this.Mstsc = new Mstsc();
+export function locale() {
+  return window.navigator.userLanguage || window.navigator.language;
+}

@@ -17,100 +17,75 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function() {
-	
-	/**
-	 * decompress bitmap from RLE algorithm
-	 * @param	bitmap	{object} bitmap object of bitmap event of node-rdpjs
-	 */
-	function decompress (bitmap) {
-		var fName = null;
-		switch (bitmap.bitsPerPixel) {
-		case 15:
-			fName = 'bitmap_decompress_15';
-			break;
-		case 16:
-			fName = 'bitmap_decompress_16';
-			break;
-		case 24:
-			fName = 'bitmap_decompress_24';
-			break;
-		case 32:
-			fName = 'bitmap_decompress_32';
-			break;
-		default:
-			throw 'invalid bitmap data format';
-		}
-		
-		var input = new Uint8Array(bitmap.data);
-		var inputPtr = Module._malloc(input.length);
-		var inputHeap = new Uint8Array(Module.HEAPU8.buffer, inputPtr, input.length);
-		inputHeap.set(input);
-		
-		var output_width = bitmap.destRight - bitmap.destLeft + 1;
-		var output_height = bitmap.destBottom - bitmap.destTop + 1;
-		var ouputSize = output_width * output_height * 4;
-		var outputPtr = Module._malloc(ouputSize);
+function decompress(bitmap) {
+  let fName = null;
+  switch (bitmap.bitsPerPixel) {
+    case 15:
+      fName = 'bitmap_decompress_15';
+      break;
+    case 16:
+      fName = 'bitmap_decompress_16';
+      break;
+    case 24:
+      fName = 'bitmap_decompress_24';
+      break;
+    case 32:
+      fName = 'bitmap_decompress_32';
+      break;
+    default:
+      throw new Error('invalid bitmap data format');
+  }
 
-		var outputHeap = new Uint8Array(Module.HEAPU8.buffer, outputPtr, ouputSize);
+  const input = new Uint8Array(bitmap.data);
+  const inputPtr = window.Module._malloc(input.length);
+  const inputHeap = new Uint8Array(window.Module.HEAPU8.buffer, inputPtr, input.length);
+  inputHeap.set(input);
 
-		var res = Module.ccall(fName,
-			'number',
-			['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
-			[outputHeap.byteOffset, output_width, output_height, bitmap.width, bitmap.height, inputHeap.byteOffset, input.length]
-		);
-		
-		var output = new Uint8ClampedArray(outputHeap.buffer, outputHeap.byteOffset, ouputSize);
-		
-		Module._free(inputPtr);
-		Module._free(outputPtr);
-		
-		return { width : output_width, height : output_height, data : output };
-	}
-	
-	/**
-	 * Un compress bitmap are reverse in y axis
-	 */
-	function reverse (bitmap) {
-		return { width : bitmap.width, height : bitmap.height, data : new Uint8ClampedArray(bitmap.data) };
-	}
+  const output_width = bitmap.destRight - bitmap.destLeft + 1;
+  const output_height = bitmap.destBottom - bitmap.destTop + 1;
+  const outputSize = output_width * output_height * 4;
+  const outputPtr = window.Module._malloc(outputSize);
 
-	/**
-	 * Canvas renderer
-	 * @param canvas {canvas} use for rendering
-	 */
-	function Canvas(canvas) {
-		this.canvas = canvas;
-		this.ctx = canvas.getContext("2d");
-	}
-	
-	Canvas.prototype = {
-		/**
-		 * update canvas with new bitmap
-		 * @param bitmap {object}
-		 */
-		update : function (bitmap) {
-			var output = null;
-			if (bitmap.isCompress) {
-				output = decompress(bitmap);
-			}
-			else {
-				output = reverse(bitmap);
-			}
-			
-			// use image data to use asm.js
-			var imageData = this.ctx.createImageData(output.width, output.height);
-			imageData.data.set(output.data);
-			this.ctx.putImageData(imageData, bitmap.destLeft, bitmap.destTop);
-		}
-	}
-	
-	/**
-	 * Module export
-	 */
-	Mstsc.Canvas = {
-		create : function (canvas) {
-			return new Canvas(canvas);
-		}
-	}
-})();
+  const outputHeap = new Uint8Array(window.Module.HEAPU8.buffer, outputPtr, outputSize);
+
+  window.Module.ccall(fName,
+    'number',
+    ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
+    [outputHeap.byteOffset, output_width, output_height, bitmap.width, bitmap.height, inputHeap.byteOffset, input.length]
+  );
+
+  const output = new Uint8ClampedArray(outputHeap.buffer, outputHeap.byteOffset, outputSize);
+
+  window.Module._free(inputPtr);
+  window.Module._free(outputPtr);
+
+  return { width: output_width, height: output_height, data: output };
+}
+
+function reverse(bitmap) {
+  return { width: bitmap.width, height: bitmap.height, data: new Uint8ClampedArray(bitmap.data) };
+}
+
+export class Canvas {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+  }
+
+  update(bitmap) {
+    let output = null;
+    if (bitmap.isCompress) {
+      output = decompress(bitmap);
+    } else {
+      output = reverse(bitmap);
+    }
+
+    const imageData = this.ctx.createImageData(output.width, output.height);
+    imageData.data.set(output.data);
+    this.ctx.putImageData(imageData, bitmap.destLeft, bitmap.destTop);
+  }
+}
+
+export function createCanvas(canvas) {
+  return new Canvas(canvas);
+}

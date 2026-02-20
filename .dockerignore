@@ -1,0 +1,8 @@
+node_modules
+.git
+.env
+screenshots
+*.md
+.github
+tests
+.claude

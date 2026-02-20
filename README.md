@@ -1,51 +1,98 @@
 
-# WebRDP [![GitHub version](https://badge.fury.io/gh/Mikej81%2FWebRDP.svg)](https://badge.fury.io/gh/Mikej81%2FWebRDP) [![Build Status](https://travis-ci.org/Mikej81/WebRDP.svg?branch=master)](https://travis-ci.org/Mikej81/WebRDP) [![Known Vulnerabilities](https://snyk.io/test/github/mikej81/webrdp/badge.svg)](https://snyk.io/test/github/mikej81/webrdp) [![bitHound Overall Score](https://www.bithound.io/github/Mikej81/WebRDP/badges/score.svg)](https://www.bithound.io/github/Mikej81/WebRDP) [![bitHound Dependencies](https://www.bithound.io/github/Mikej81/WebRDP/badges/dependencies.svg)](https://www.bithound.io/github/Mikej81/WebRDP/master/dependencies/npm) [![Code Climate](https://codeclimate.com/github/Mikej81/WebRDP/badges/gpa.svg)](https://codeclimate.com/github/Mikej81/WebRDP)
+# WebRDP
 
-Web RDP Client using node-rdpjs, socket.io, (some)mstsc.js, and express
+Web-based RDP client proxy using Express, Socket.io, and HTML5 Canvas.
 
-A bare bones example of an HTML5 web-based RDP. We use RDP as a client on a host to proxy a Websocket / Socket.io connection to an RDP server.
+Proxies a WebSocket/Socket.io connection from the browser to an RDP server via Node.js. Renders the remote desktop in an HTML5 Canvas element with keyboard and mouse input forwarding.
 
-![alt text](https://i.imgur.com/ZD0XBkG.png "Screenshot")
+## Requirements
 
+- Node.js >= 20
+- Or Docker
 
-## Instructions
+## Quick Start
 
-Install:  
+### Node.js
 
-`git https://github.com/Mikej81/WebRDP.git`
+```bash
+git clone https://github.com/Mikej81/WebRDP.git
+cd WebRDP
+cp .env.example .env    # edit as needed
+npm install
+npm run build
+node app.js
+```
 
-`npm install`
+### Docker
 
-`node app.js`
+```bash
+docker compose up -d
+```
 
-Uses basic credentials and IP from req.param.host.
+Then open `http://localhost:4200/rdp/host/<RDP_HOST_IP>` in your browser.
 
-Domain is hardcoded, will work on that and more error handling for tab/browser close, etc.
+You'll be prompted for HTTP Basic Auth credentials — these are forwarded as the RDP username/password. Use `DOMAIN\username` format for domain-joined hosts.
 
-# Options
-## Screen capture OnMouseClick
-This is currently hardcoded, will add the option to enable/disable in config file and/or header value.
+## Configuration
 
-## GET request vars / params
+All settings are configured via environment variables (or a `.env` file). See [`.env.example`](.env.example) for the full list:
 
-* **domain/username/password** - BasicAuth
-* **host** - passed via the URI /rdp/host/[host_ip]
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `LISTEN_IP` | `127.0.0.1` | Bind address |
+| `LISTEN_PORT` | `4200` | Listen port |
+| `SESSION_SECRET` | (random) | Express session secret |
+| `RDP_DEFAULT_PORT` | `3389` | Default RDP port |
+| `LOG_SCREEN_ON_MOUSECLICKS` | `false` | Save screenshots on click |
+| `HEADER_TEXT` | (none) | Header bar text |
+| `HEADER_BACKGROUND` | `green` | Header bar color |
+| `TLS_KEY_PATH` | (none) | Path to TLS private key (enables HTTPS) |
+| `TLS_CERT_PATH` | (none) | Path to TLS certificate |
 
-## Config File Options
+## Usage
 
-## Examples
-usage:  http://localhost:4200/rdp/host/[RDP_HOST_IP]
+### URL Parameters
 
-## Todo
-* Add keylogging to syslog on crlf, or whatever.
-* Cleanup code.
+```
+http://localhost:4200/rdp/host/<host>?port=3389&header=MySession&headerBackground=blue
+```
 
-## Contributing
-Do it!
+- **host** — IP, FQDN, or hostname of the RDP target
+- **port** — RDP port (default: 3389)
+- **header** — Custom header text
+- **headerBackground** — Header bar CSS color
 
-## Release History
-_(Nothing yet)_
+### Authentication
+
+HTTP Basic Auth credentials are passed through to the RDP connection:
+- **Username**: `DOMAIN\user` or just `user`
+- **Password**: your RDP password
+
+## Development
+
+```bash
+npm install
+npm run build        # esbuild: bundles client JS
+npm run dev          # starts server with --watch
+npm run lint         # eslint
+npm test             # vitest
+```
+
+## Architecture
+
+```
+Browser (Canvas + Socket.io client)
+    ↕ WebSocket
+Node.js (Express + Socket.io server)
+    ↕ RDP protocol
+Windows RDP Server
+```
+
+- **Server**: Express handles auth and routing; Socket.io proxies input/output events between the browser and the RDP library (`@electerm/rdpjs`)
+- **Client**: Canvas renders bitmap updates; keyboard/mouse events are captured and forwarded over Socket.io
+- **RLE Decompression**: An Emscripten/WASM module (`rle.js`) handles client-side bitmap decompression
 
 ## License
+
 Copyright (c) 2017 Mikej81
 Licensed under the GPL license.

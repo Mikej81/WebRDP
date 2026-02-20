@@ -1,0 +1,18 @@
+services:
+  webrdp:
+    build: .
+    ports:
+      - "4200:4200"
+    environment:
+      - LISTEN_IP=0.0.0.0
+      - LISTEN_PORT=4200
+      - SESSION_SECRET=change-me-in-production
+      - LOG_SCREEN_ON_MOUSECLICKS=false
+      - HEADER_TEXT=WebRDP
+      - HEADER_BACKGROUND=green
+    volumes:
+      - screenshots:/app/screenshots
+    restart: unless-stopped
+
+volumes:
+  screenshots:
